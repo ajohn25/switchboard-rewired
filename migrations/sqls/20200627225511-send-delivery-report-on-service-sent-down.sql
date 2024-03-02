@@ -1,0 +1,3 @@
+drop trigger _500_send_delivery_report_with_segment_counts on sms.outbound_messages;
+
+drop function sms.tg__outbound_messages__send_delivery_report_for_sent();

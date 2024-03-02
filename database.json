@@ -1,0 +1,16 @@
+{
+  "defaultEnv": { "ENV": "NODE_ENV" },
+  "production": {
+    "driver": "pg",
+    "connectionString": { "ENV": "PROD_POSTGRES_URL" }
+  },
+  "development": {
+    "driver": "pg",
+    "connectionString": { "ENV": "POSTGRES_URL" }
+  },
+  "test": {
+    "driver": "pg",
+    "connectionString": { "ENV": "TEST_POSTGRES_URL" }
+  },
+  "sql-file": true
+}

@@ -1,0 +1,1 @@
+-- There is no down migration. See note in the corresponding 'up' migration SQL.

@@ -1,0 +1,81 @@
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: worker
+  namespace: numbers
+spec:
+  minReplicas: 2
+  maxReplicas: 2
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: worker
+  metrics:
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: 80
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: numbers
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        app: worker
+    spec: # pod spec
+      containers:
+        - name: numbers-worker
+          image: gcr.io/assemble-services/numbers-server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "500Mi"
+              cpu: "500m"
+            limits:
+              memory: "600Mi"
+              cpu: "600m"
+          env:
+            - name: MODE
+              value: "WORKER"
+            - name: TELNYX_API_USER
+              valueFrom:
+                secretKeyRef:
+                  name: main-secrets
+                  key: telnyxApiUser
+            - name: TELNYX_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: main-secrets
+                  key: telnyxApiToken
+            - name: TELNYX_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: main-secrets
+                  key: telnyxAuthToken
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: main-secrets
+                  key: databaseUrl
+            - name: APPLICATION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: main-secrets
+                  key: applicationSecret
+            - name: ADMIN_ACCESS_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: main-secrets
+                  key: adminAccessSecret
+            - name: DEBUG
+              value: "assemble-worker:*"
+            - name: BASE_URL
+              value: "https://numbers.assemble.live"

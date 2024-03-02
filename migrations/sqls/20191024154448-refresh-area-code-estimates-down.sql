@@ -1,0 +1,1 @@
+drop function sms.refresh_area_code_capacity_estimates;

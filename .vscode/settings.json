@@ -1,0 +1,25 @@
+{
+  "cSpell.words": [
+    "BYSCORE",
+    "flushall",
+    "geoadd",
+    "georadius",
+    "getexistingavailablenumber",
+    "hmset",
+    "sadd",
+    "savepoint",
+    "sismember",
+    "srem",
+    "Telnyx",
+    "timestamptz",
+    "Twilio",
+    "updatenextsendableby",
+    "WITHSCORES",
+    "zadd",
+    "zincrby",
+    "ZINCRBYORZADD",
+    "zrange",
+    "zrangebyscore",
+    "zrem"
+  ]
+}

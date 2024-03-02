@@ -1,0 +1,14 @@
+# Ignore everything
+**
+
+# Allow source files
+!/package.json
+!/yarn.lock
+!/database.json
+!/migrations
+!/lua
+!/src/*
+!/scripts/*
+
+!/tsconfig.json
+!/tslint.json

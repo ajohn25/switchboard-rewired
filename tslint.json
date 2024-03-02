@@ -1,0 +1,48 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": ["typings/@bandwidth/numbers/*", "src/lib/db-types.ts"]
+  },
+  "rules": {
+    "interface-name": [true, "never-prefix"],
+    // TODO: allow devDependencies only in **/*.spec.ts files:
+    // waiting on https://github.com/palantir/tslint/pull/3708
+    "no-implicit-dependencies": [true, "dev"],
+
+    /* Rewired Rules */
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-leading-underscore",
+        "require-const-for-all-caps"
+      ]
+    },
+
+    "import-name": {
+      "options": [
+        true,
+        {
+          "airtable": "Airtable",
+          "pgCursor": "Cursor",
+          "ioredisMock": "RedisMock",
+          "ioredis": "Redis",
+          "map": "usZips"
+        }
+      ]
+    },
+
+    "no-submodule-imports": [true, "lodash", "us-zips"],
+
+    "prefer-array-literal": [true, { "allow-type-parameters": true }],
+
+    // https://github.com/palantir/tslint/pull/3607#issuecomment-355713503
+    "object-literal-sort-keys": false,
+    "object-shorthand-properties-first": false
+    /* End Rewired Rules */
+  }
+}

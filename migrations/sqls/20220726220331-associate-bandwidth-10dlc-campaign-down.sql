@@ -1,0 +1,2 @@
+drop trigger _500_bandwidth_complete_10dlc_purchase on sms.phone_number_requests;
+drop trigger _500_bandwidth_associate_10dlc_campaign on sms.phone_number_requests;

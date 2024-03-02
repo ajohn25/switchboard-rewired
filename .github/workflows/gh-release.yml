@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  cut-gh-release:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_IMAGE: us-east4-docker.pkg.dev/assemble-services/switchboard/core
+      BODY_PATH: release-body.txt
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Parse pre-release semver string
+        id: semver_parser
+        uses: booxmedialtd/ws-action-parse-semver@v1
+        with:
+          input_string: ${{ github.ref }}
+          version_extractor_regex: '\/v(.*)$'
+      - name: Generate Docker image tag
+        run: 'echo "Docker image: \`$DOCKER_IMAGE:${{ steps.semver_parser.outputs.fullversion }}\`" > $BODY_PATH'
+      - name: Generate Changelog
+        run: awk "/[#]{2,3} \[${{ steps.semver_parser.outputs.fullversion }}/{flag=1; next} /[#]{2,3} \[/{flag=0} flag" CHANGELOG.md >> $BODY_PATH
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          name: Version ${{ steps.semver_parser.outputs.fullversion }}
+          tag_name: v${{ steps.semver_parser.outputs.fullversion }}
+          body_path: ${{ env.BODY_PATH }}
+          prerelease: ${{ !!steps.semver_parser.outputs.prerelease }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

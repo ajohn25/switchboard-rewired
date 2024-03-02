@@ -1,0 +1,3 @@
+alter table sms.outbound_messages
+  drop constraint outbound_messages_sending_location_id_fkey,
+  drop constraint outbound_messages_pending_number_request_id_fkey;

@@ -1,0 +1,3 @@
+drop function sms.process_grey_route_message;
+drop trigger _500_increment_commitment_bucket_after_insert on sms.outbound_messages_routing;
+drop trigger _500_increment_commitment_bucket_after_update on sms.outbound_messages_routing;
